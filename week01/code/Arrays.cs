@@ -1,3 +1,5 @@
+using System.Runtime;
+
 public static class Arrays
 {
     /// <summary>
@@ -12,8 +14,20 @@ public static class Arrays
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
+        
+        // List to store the multiple values
+        List<double>multiples = new List<double>();
 
-        return []; // replace this return statement with your own
+        // loop to iterate for each multiple given the length
+        for (int i = 1; i <= length; i++)
+        {   
+            //calculate its multiple
+            double multiple = number * i;
+
+            //append the multiple value to the list
+            multiples.Add(multiple);
+        }
+        return multiples.ToArray();
     }
 
     /// <summary>
@@ -29,5 +43,17 @@ public static class Arrays
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
+
+        // Find where the last 'amount' elements begin
+        int splitIndex = data.Count - amount;
+
+        // Copy those elements out
+        List<int> tail = data.GetRange(splitIndex, amount);
+
+        // Remove them from their original position
+        data.RemoveRange(splitIndex, amount);
+
+        // Insert the tail back at the front, preserving order
+        data.InsertRange(0, tail);
     }
 }
