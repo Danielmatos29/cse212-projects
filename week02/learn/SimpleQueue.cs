@@ -1,4 +1,6 @@
-﻿public class SimpleQueue {
+﻿using System.Diagnostics;
+
+public class SimpleQueue {
     public static void Run() {
         // Test Cases
 
@@ -9,8 +11,8 @@
         var queue = new SimpleQueue();
         queue.Enqueue(100);
         var value = queue.Dequeue();
-        Console.WriteLine(value);
-        // Defect(s) Found:
+        Trace.Assert(value == 100);
+        // Defect(s) Found: It tries to remove data from index 1 rather than 0
 
         Console.WriteLine("------------");
 
@@ -23,13 +25,11 @@
         queue.Enqueue(300);
         queue.Enqueue(400);
         value = queue.Dequeue();
-        Console.WriteLine(value);
+        Trace.Assert(value == 200);
         value = queue.Dequeue();
+        Trace.Assert(value == 300);
         Console.WriteLine(value);
-        value = queue.Dequeue();
-        Console.WriteLine(value);
-        // Defect(s) Found: 
-
+        // Defect(s) Found: It enqueues the data in front instead of the back
         Console.WriteLine("------------");
 
         // Test 3
@@ -44,7 +44,7 @@
         catch (IndexOutOfRangeException) {
             Console.WriteLine("I got the exception as expected.");
         }
-        // Defect(s) Found: 
+        // Defect(s) Found: None.
     }
 
     private readonly List<int> _queue = new();
@@ -54,7 +54,7 @@
     /// </summary>
     /// <param name="value">Integer value to add to the queue</param>
     private void Enqueue(int value) {
-        _queue.Insert(0, value);
+        _queue.Add(value);
     }
 
     /// <summary>
@@ -66,8 +66,8 @@
         if (_queue.Count <= 0)
             throw new IndexOutOfRangeException();
 
-        var value = _queue[1];
-        _queue.RemoveAt(1);
+        var value = _queue[0];
+        _queue.RemoveAt(0);
         return value;
     }
 }
