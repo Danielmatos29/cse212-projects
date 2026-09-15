@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 public class PriorityQueueTests
 {
     [TestMethod]
-    // Scenario: Create a queue with the following data and priority: Take a shower (2), Watch TV (3), Do homeworks (1)
+    // Scenario: Create a queue with the following data and priorities: Take a shower (2), Watch TV (3), Do homeworks (1)
     // Expected Result: Do homeworks
     // Defect(s) Found: iteration to find the higher priority 
     // beginned from the second item instead of the first one.
@@ -18,20 +18,30 @@ public class PriorityQueueTests
         priorityQueue.Enqueue("Watch TV", 1);
         priorityQueue.Enqueue("Do homeworks", 3);
 
-        PriorityItem expectedResults = new PriorityItem("Do homeworks", 3);
+        PriorityItem expectedResult = new PriorityItem("Do homeworks", 3);
     
         var person = priorityQueue.Dequeue();
-        Assert.AreEqual(expectedResults.Value, person);
+        Assert.AreEqual(expectedResult.Value, person);
     }
 
     [TestMethod]
-    // Scenario: 
-    // Expected Result: 
+    // Scenario: Create a queue with the following data and priorities: Play Video Games (1), Learn something new (2), Train Calisthenics (3), Read the scriptures (4), Pray (4)
+    // Expected Result: Pray
     // Defect(s) Found: 
     public void TestPriorityQueue_2()
     {
         var priorityQueue = new PriorityQueue();
-        Assert.Fail("Implement the test case and then remove this.");
+
+        priorityQueue.Enqueue("Play Video Game", 1);
+        priorityQueue.Enqueue("Learn something new", 2);
+        priorityQueue.Enqueue("Train Calisthenics", 3);
+        priorityQueue.Enqueue("Read the scriptures", 4);
+        priorityQueue.Enqueue("Pray", 4);
+
+        PriorityItem expectedResult = new PriorityItem("Pray", 4);
+
+        var person = priorityQueue.Dequeue();
+        Assert.AreEqual(expectedResult.Value, person);
     }
 
     // Add more test cases as needed below.
