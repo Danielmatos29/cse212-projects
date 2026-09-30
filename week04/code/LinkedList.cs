@@ -182,6 +182,7 @@ public class LinkedList : IEnumerable<int>
     {
         // call the generic version of the method
         return this.GetEnumerator();
+        
     }
 
     /// <summary>
