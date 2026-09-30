@@ -22,7 +22,22 @@ public static class SetsAndMaps
     public static string[] FindPairs(string[] words)
     {
         // TODO Problem 1 - ADD YOUR CODE HERE
-        return [];
+        var setOfWords = new HashSet<string>();
+        string[] pairs = {};
+        foreach(string word in words)
+        {
+            var charWord = word.ToCharArray();
+
+            Array.Reverse(charWord);
+
+            string reversed = new string(charWord);
+            if (setOfWords.Contains(reversed))
+            {
+                pairs = pairs.Append($"{reversed} & {word}").ToArray();
+            }
+            setOfWords.Add(word);
+        }
+        return pairs.ToArray();
     }
 
     /// <summary>
@@ -43,6 +58,14 @@ public static class SetsAndMaps
         {
             var fields = line.Split(",");
             // TODO Problem 2 - ADD YOUR CODE HERE
+            if (degrees.ContainsKey(fields[3]))
+            {
+                degrees[fields[3]] += 1;
+            }
+            else
+            {
+                degrees.Add(fields[3], 1);
+            }
         }
 
         return degrees;
@@ -67,6 +90,46 @@ public static class SetsAndMaps
     public static bool IsAnagram(string word1, string word2)
     {
         // TODO Problem 3 - ADD YOUR CODE HERE
+        string lword1 = word1.ToLower().Replace(" ", string.Empty);
+        string lword2 = word2.ToLower().Replace(" ", string.Empty);
+
+        var letterMap = new Dictionary<char, int>();
+        var setLetters = new HashSet<char>();
+
+        int anagramStatusCount = 0;
+
+        if (!(lword1.Length == lword2.Length))
+        {
+            return false;
+        }
+
+        for (int i = 0; i < lword1.Length; i++)
+        {
+            char letter = lword1[i];
+            if (letterMap.ContainsKey(letter)) letterMap[letter]++;
+            else
+            {
+                setLetters.Add(letter);
+                letterMap[letter] = 1;
+            }
+        }
+
+        for (int i = 0; i < lword2.Length; i++)
+        {
+            char letter = lword2[i];
+            if (letterMap.ContainsKey(letter) && letterMap[letter] > 0) letterMap[letter]--;
+            else
+            {
+                return false;
+            }
+
+            if (letterMap[letter] == 0) anagramStatusCount++;
+        }
+
+        if (anagramStatusCount == setLetters.Count())
+        {
+            return true;
+        }
         return false;
     }
 
